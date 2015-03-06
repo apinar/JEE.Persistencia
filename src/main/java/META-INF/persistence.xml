@@ -11,11 +11,15 @@
 		<class>es.art83.persistence.jpa.Address2</class>
 		<class>es.art83.persistence.jpa.User5</class>
 		<class>es.art83.persistence.jpa.Category2</class>
+		<class>es.art83.persistence.jpa.Category3</class>
 		<class>es.art83.persistence.jpa.User6</class>
 		<class>es.art83.persistence.jpa.Boat2</class>
+		<class>es.art83.persistence.jpa.Boat3</class>
 		<class>es.art83.persistence.jpa.Phone2</class>
+		<class>es.art83.persistence.jpa.Phone3</class>
 		<class>es.art83.persistence.jpa.User7</class>
 		<class>es.art83.persistence.jpa.User8</class>
+		<class>es.art83.persistence.jpa.User9</class>
 		<class>es.art83.persistence.jpa.Vehicle2</class>
 		<class>es.art83.persistence.jpa.inheritance.C1</class>
 		<class>es.art83.persistence.jpa.inheritance.C1A</class>

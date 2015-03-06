@@ -31,7 +31,7 @@ public class Transaction {
             // sentencias SQL
             sentencia = conexion.createStatement();
             sentencia.executeUpdate("INSERT tabla1 VALUES (8,'Trans1')");
-            sentencia.executeUpdate("INSERT tabla1 VALUES (8,'Trans2')");
+            sentencia.executeUpdate("INSERT tabla1 VALUES (9,'Trans2')");
 
             // Si se llega a este punto, todo ha ido bien
             conexion.commit();
