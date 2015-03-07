@@ -200,7 +200,7 @@ public class PhoneQuerys {
         
         query.select(rootPhone);
         
-        Predicate p1 = criteria.equal(rootPhone.get("PhoneType"), PhoneType.WORK);
+        Predicate p1 = criteria.equal(rootPhone.get("phoneType"), PhoneType.WORK);
         Predicate p2 = criteria.lt(rootPhone.get("number"), 200);
         
         Predicate predicate = criteria.and(p1,p2);
