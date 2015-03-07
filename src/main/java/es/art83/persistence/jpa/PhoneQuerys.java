@@ -115,6 +115,10 @@ public class PhoneQuerys {
 
     }
 
+    
+    //Hay que hacer los tres siguientes ejemplos ya hechos con JPQL pero con Criteria
+    
+    
     private static final String JPQL1 = "SELECT p.number FROM Phone2 p WHERE p.id > 3 AND p.phoneType IS NOT NULL";
 
     @SuppressWarnings("unchecked")
@@ -122,6 +126,31 @@ public class PhoneQuerys {
         return (List<PhoneType>) entityManager.createQuery(JPQL1).getResultList();
     }
 
+    
+    private List<PhoneType> findPhoneNumberWithIdGreaterThanThree(){
+    	CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+        CriteriaQuery<PhoneType> query = criteria.createQuery(PhoneType.class);
+        Root<Phone2> rootPhone = query.from(Phone2.class);
+    	
+        query.select(rootPhone.get("number"));
+    	
+        Predicate p1 = criteria.gt(rootPhone.get("id"), 3);
+        Predicate p2 = criteria.isNotNull(rootPhone.get("phoneType"));
+        
+        
+        Predicate predicate = criteria.and(p1, p2);
+        
+        
+        query.where(predicate);
+        query.orderBy(criteria.asc(rootPhone.get("phoneType")));
+        
+    	TypedQuery<PhoneType> typedQuery = entityManager.createQuery(query);
+    	typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0);
+    	return typedQuery.getResultList();
+    }
+    
+    
     private static final String JPQL2 = "SELECT p.id FROM Phone2 p WHERE p.number > 111";
 
     @SuppressWarnings("unchecked")
@@ -129,6 +158,29 @@ public class PhoneQuerys {
         return (List<Integer>) entityManager.createQuery(JPQL2).getResultList();
     }
 
+    
+    private List<Integer> findIdWithNumberGt111(){
+    	CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+    	
+        CriteriaQuery<Integer> query = criteria.createQuery(Integer.class);
+        Root<Phone2> rootPhone = query.from(Phone2.class);
+    	
+    	query.select(rootPhone.get("id"));
+    	
+    	
+    	Predicate p1 = criteria.gt(rootPhone.get("number"), 111);
+                        
+        Predicate predicate = criteria.and(p1);
+    	
+    	query.where(predicate);
+    	
+    	TypedQuery<Integer> typedQuery = entityManager.createQuery(query);
+    	typedQuery.setFirstResult(0);
+        typedQuery.setMaxResults(0);
+    	return typedQuery.getResultList();
+    }
+    
+    
     private static final String JPQL3 = "SELECT p FROM Phone2 p WHERE p.phoneType = :type AND p.number < 200 ORDER BY p.number";
 
     @SuppressWarnings("unchecked")
@@ -138,6 +190,31 @@ public class PhoneQuerys {
         return (List<Phone2>) query.getResultList();
     }
 
+    
+    private List<Phone2> findPhoneWithTypeAndNumberLt200(){
+    	CriteriaBuilder criteria = entityManager.getCriteriaBuilder();
+    	
+        CriteriaQuery<Phone2> query = criteria.createQuery(Phone2.class);
+        Root<Phone2> rootPhone = query.from(Phone2.class);
+        
+        
+        query.select(rootPhone);
+        
+        Predicate p1 = criteria.equal(rootPhone.get("PhoneType"), PhoneType.WORK);
+        Predicate p2 = criteria.lt(rootPhone.get("number"), 200);
+        
+        Predicate predicate = criteria.and(p1,p2);
+                
+        query.where(predicate);
+        query.orderBy(criteria.asc(rootPhone.get("number")));
+    	
+    	TypedQuery<Phone2> typedQuery = entityManager.createQuery(query);
+    	
+    	return typedQuery.getResultList();
+    	
+    }
+    
+    
     public static void main(String[] args) {
         PhoneQuerys criteriaPhone = new PhoneQuerys();
 
@@ -155,8 +232,17 @@ public class PhoneQuerys {
                 + criteriaPhone.findPhoneTypesDistinctCriteria());
 
         System.out.println("findJpql1: " + criteriaPhone.findJpql1());
+        System.out.println("findPhoneNumberWithIdGreaterThanThree: " + criteriaPhone.findPhoneNumberWithIdGreaterThanThree());
+        
+        
         System.out.println("findJpql2: " + criteriaPhone.findJpql2());
+        System.out.println("findIdWithNumberGt111: " + criteriaPhone.findIdWithNumberGt111());
+        
+        
         System.out.println("findJpql3: " + criteriaPhone.findJpql3());
+        System.out.println("findPhoneWithTypeAndNumberLt200: " + criteriaPhone.findPhoneWithTypeAndNumberLt200());
+        
     }
+       
 
 }
